@@ -4,6 +4,7 @@ check process apache2 with pidfile /var/run/apache2/apache2.pid
 	stop program  = "/etc/init.d/apache2 stop"
 	#stop program  = "/bin/bash -c '/etc/init.d/apache2 stop && sleep 5 && /bin/kill -9 $(/bin/pidof apache2)'"
 	#stop program  = "/bin/bash -c '/etc/init.d/apache2 stop && sleep 5 && /usr/bin/killall -9 apache2'"
+	{% if monit_check_hostname is defined and monit_check_hostname != None and monit_check_hostname != "" %}
 	if failed
 		host {{ monit_check_hostname }}
 		port {{ monit_check_port }}
@@ -12,6 +13,7 @@ check process apache2 with pidfile /var/run/apache2/apache2.pid
 	# status = 502 ## version 5.3 required
 	with timeout 30 seconds for 2 cycles
 		then restart
+	{% endif %}
 
 	if children > 200
 		then restart
