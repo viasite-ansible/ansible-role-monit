@@ -6,3 +6,6 @@ monit_check_filesystems:
 monit_check_hostname:
 monit_check_port: 80
 monit_check_request: /
+
+monit_mailfrom: root@example.com
+monit_mailto: root@example.com
